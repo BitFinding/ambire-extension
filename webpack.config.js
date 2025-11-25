@@ -122,7 +122,15 @@ module.exports = async function (env, argv) {
     // {@link https://developer.chrome.com/extensions/manifest/key}
     // TODO: key not supported in gecko browsers
     if (isWebkit) {
-      manifest.key = process.env.BROWSER_EXTENSION_PUBLIC_KEY
+      const publicKey = process.env.BROWSER_EXTENSION_PUBLIC_KEY
+      // Only set the key if it's a valid non-empty value (not a placeholder)
+      // For development, omitting the key is fine - Chrome will generate a random ID
+      if (publicKey && publicKey.trim() && publicKey !== 'dev' && publicKey !== '""') {
+        manifest.key = publicKey
+      } else {
+        // Remove key field if it exists and value is invalid
+        delete manifest.key
+      }
     }
 
     const manifestJSON = JSON.stringify(manifest, null, 2)

@@ -15,6 +15,7 @@ import DelegationHumanization from '@web/components/DelegationHumanization'
 import useSignAccountOpControllerState from '@web/hooks/useSignAccountOpControllerState'
 import SectionHeading from '@web/modules/sign-account-op/components/SectionHeading'
 import TransactionSummary from '@web/modules/sign-account-op/components/TransactionSummary'
+import UnblindAnalysis from '@web/modules/sign-account-op/components/UnblindAnalysis/UnblindAnalysis'
 
 import PendingTransactionsSkeleton from './PendingTransactionsSkeleton'
 
@@ -68,15 +69,18 @@ const PendingTransactions: FC<Props> = ({ network, setDelegation, delegatedContr
           delegatedContract={delegatedContract}
         />
       ) : network && callsToVisualize.length ? (
-        callsToVisualize.map((call, i) => (
-          <TransactionSummary
-            key={call.id}
-            style={i !== callsToVisualize.length - 1 ? spacings.mbTy : {}}
-            call={call}
-            chainId={network.chainId}
-            index={i}
-          />
-        ))
+        <>
+          {callsToVisualize.map((call, i) => (
+            <TransactionSummary
+              key={call.id}
+              style={i !== callsToVisualize.length - 1 ? spacings.mbTy : {}}
+              call={call}
+              chainId={network.chainId}
+              index={i}
+            />
+          ))}
+          <UnblindAnalysis accountOp={accountOp} network={network} />
+        </>
       ) : (
         <PendingTransactionsSkeleton />
       )}

@@ -20,6 +20,7 @@ import useResponsiveActionWindow from '@web/hooks/useResponsiveActionWindow'
 import useSignMessageControllerState from '@web/hooks/useSignMessageControllerState'
 import HardwareWalletSigningModal from '@web/modules/hardware-wallet/components/HardwareWalletSigningModal'
 import LedgerConnectModal from '@web/modules/hardware-wallet/components/LedgerConnectModal'
+import UnblindMessageAnalysis from '@web/modules/sign-message/components/UnblindMessageAnalysis'
 import FallbackVisualization from '@web/modules/sign-message/screens/SignMessageScreen/FallbackVisualization'
 import Info from '@web/modules/sign-message/screens/SignMessageScreen/Info'
 import getStyles from '@web/modules/sign-message/screens/SignMessageScreen/styles'
@@ -111,6 +112,7 @@ const Main = ({
           }}
         >
           <Info />
+          <UnblindMessageAnalysis messageToSign={signMessageState.messageToSign} />
           {shouldDisplayEIP1271Warning && (
             <Alert
               type="error"
